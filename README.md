@@ -42,7 +42,6 @@ Bazen, bir dizi küçük ve bağlantılı commit yerine bir ana değişikliği t
    pick abc1234 Birinci commit
    s def5678 İkinci commit
    s ghi9012 Üçüncü commit
-   ...
    ```
 
 4. **Commit açıklamalarını düzenleyin**:
@@ -121,7 +120,7 @@ Git ile yeni bir depo (repository) oluşturup bunu uzak bir depoya (remote repos
    Şimdi, yerel deponuzdaki commitleri uzak depoya gönderebilirsiniz. Bunun için aşağıdaki komutu kullanın:
 
    ```bash
-   git push -u origin master
+   git push -u origin <branch-no>
    ```
 
    `-u` seçeneği, yerel dalı uzak dal ile ilişkilendirir ve sonraki push işlemleri için daha kolaylık sağlar. `master` yerine kullanmak istediğiniz dalın adını kullanabilirsiniz.
