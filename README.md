@@ -1,105 +1,133 @@
-# git-study
+# Git - Çalışması
 
-Elimizdeki commitleri tek commit haline getirmek
+# Tek Bir Commit'i İndirme (Cherry-Pick)
 
+Eğer bir Git deposundan tek bir commit indirmek istiyorsanız, aşağıdaki adımları takip edebilirsiniz.
 
-Elimizdeki 10 ayrı commit'i tek bir commit haline getirmek için git rebase komutunu kullanabilirsiniz. İşte adım adım nasıl yapılacağına dair bir rehber:
+1. İlgili Git deposuna gidin.
 
-Öncelikle, proje dizininizin bulunduğu dizinde terminal veya komut istemcisini açın.
+2. İndirmek istediğiniz commit'in kimlik bilgisini (commit hash) alın. Bu kimlik bilgisi, commit'in benzersiz tanımlayıcısıdır.
 
-git log komutunu kullanarak son 10 commit'i inceleyin ve bunların özetini alın. Commit özetlerini görmek için klavyenizdeki "q" tuşunu kullanarak çıkış yapabilirsiniz.
+3. Aşağıdaki komutu kullanarak, ilgili commit'i mevcut dalınıza indirin:
+   
+   ```bash
+   git cherry-pick <commit-hash>
+   ```
 
-git rebase -i HEAD~10 komutunu çalıştırarak interaktif bir rebase işlemi başlatın. "HEAD~10", son 10 commit'i seçtiğimiz anlamına gelir. Bu komutla bir metin düzenleyici açılacaktır.
+Elbette, 10 ayrı commiti tek bir commit haline getirmek için Markdown formatında nasıl yapılacağına dair bir açıklama aşağıda verilmiştir:
 
-Açılan metin düzenleyicisinde, commitlerinizi birleştirmek istediğiniz commitin önündeki "pick" ifadesini "squash" veya "s" ile değiştirin. Örneğin, ilk commiti korumak istiyorsanız, ilk satırdaki "pick" ifadesini "pick" olarak bırakın ve diğer 9 commitin önündeki "pick" ifadelerini "squash" veya "s" ile değiştirin.
+### 10 Commit'i Tek Bir Commit Haline Getirme
 
-Örnek bir metin düzenleyici görünümü:
+Bazen, bir dizi küçük ve bağlantılı commit yerine bir ana değişikliği tek bir commit olarak saklamak isteyebilirsiniz. İşte bu işlemi nasıl yapacağınızın adımları:
 
-"""
-Copy code
-pick abc1234 Birinci commit
-s def5678 İkinci commit
-s ghi9012 Üçüncü commit
-"""
+* **!!!! PR'ın merge edileceği branch ile sync olması önemlidir. Conflict meyadan gelebilir. !!!!**
 
-...
-Düzenlediğiniz metin düzenleyicisini kaydedin ve kapatın.
+1. **İlgili Git deposuna gidin**.
 
-Bir sonraki adımda, birleştirmek istediğiniz tüm commitleri tek bir commit haline getirmek için bir başlık ve açıklama belirlemeniz gerekecek. Metin düzenleyicisi, tek bir commit için birleştirilen tüm değişikliklerin açıklamalarını gösterir. Bu açıklamayı düzenleyin ve kaydedin.
+2. **10 ayrı commit'i tek bir commit olarak birleştirin**:
+   
+   ```bash
+   git rebase -i HEAD~10
+   ```
 
-Rebase işlemini tamamlamak için metin düzenleyicisini kapatın. Git, commitleri birleştirir ve tek bir commit oluşturur.
+   Bu komut, son 10 commiti düzenleme modunda açacaktır. Metin düzenleyicisi açılacaktır.
 
-Son olarak, projenizi uzak sunucuya veya herhangi bir paylaşılan depoya göndermek isterseniz, git push komutunu kullanarak yapabilirsiniz.
+3. **Düzenleme modunda, commitleri birleştirin**:
+   
+   Metin düzenleyicisinde, birleştirmek istediğiniz commitin önündeki "pick" ifadesini "squash" veya kısaltılmış hali olan "s" ile değiştirin. İlk commiti "pick" olarak bırakabilirsiniz.
 
-Artık 10 ayrı commit yerine tek bir commit ile devam edebilirsiniz. Ancak bu işlem yerel bir değişikliktir. Eğer proje üzerinde başkaları da çalışıyorsa ve bu commitleri paylaşıyorsanız, dikkatli olmalısınız. Commitleri değiştirmek, paylaşılan bir geçmişin düzeltilmesi anlamına gelir ve diğer işbirliği yapanlarınızı etkileyebilir.
+   Örnek metin düzenleyici görünümü:
+   
+   ```
+   pick abc1234 Birinci commit
+   s def5678 İkinci commit
+   s ghi9012 Üçüncü commit
+   ...
+   ```
 
+4. **Commit açıklamalarını düzenleyin**:
 
+   Daha sonra, bu 10 commit için tek bir açıklama girin veya açıklamaları düzenleyin.
 
+5. **Düzenlemeyi kaydedin ve kapatın**.
 
-------------------------------------------
+6. **Yeni tek bir commit oluşturun**:
+   
+   ```
+   git push -f
+   ```
 
-git reset komutu, çalışma alanınızı ve özellikle yerel git deposunu düzenlemek için kullanılan güçlü bir Git komutudur. git reset komutunun --hard ve --soft olmak üzere iki yaygın kullanımı vardır ve aralarındaki fark önemlidir:
+   Bu komut, yerel ve uzak dalınızdaki commit geçmişini güncelleyecektir.
 
-git reset --hard: Bu seçenek, hem çalışma dizininde hem de yerel depoda yapılan değişiklikleri tamamen geri alır. Yani, tüm çalışma dizinindeki değişiklikler ve son birkaç commit yerel depodan silinir. Bu nedenle bu komutu kullanmadan önce dikkatli olun, çünkü geri alınan değişiklikler geri dönüşü olmayabilir. Kullanımı:
-
-css
-Copy code
-git reset --hard HEAD
-Bu komut, HEAD'i (en son commiti) işaret eder ve çalışma dizinini ve yerel depoyu bu noktaya geri sarmak için --hard seçeneği ile kullanılır.
-
-git reset --soft: Bu seçenek, çalışma dizinindeki değişiklikleri geri alırken, yerel depoda yapılan değişiklikleri korur. Yani, çalışma dizinindeki değişiklikler geri alınır, ancak bu değişikliklerinizi tekrar yeni bir commit olarak eklemek için kullanabilirsiniz. Kullanımı:
-
-css
-Copy code
-git reset --soft HEAD
-Bu komut da HEAD'i işaret eder, ancak --soft seçeneğiyle kullanıldığında, çalışma dizinindeki değişiklikler geri alınırken, yerel depoda bu değişikliklerinizi bekleyen değişiklikler olarak bırakır. Bu nedenle, geri alınan değişiklikleri düzenlemeniz ve yeni bir commit oluşturmanız gerekebilir.
-
-Özetle, git reset --hard, değişiklikleri geri alır ve tüm izleri silerken, git reset --soft, değişiklikleri geri alır ancak bunları yeni bir commit olarak bekletir. Hangi seçeneği kullanmanız gerektiği, yapmak istediğiniz işleme ve değişikliklerinizi nasıl yönetmek istediğinize bağlıdır.
-
-
------------------------------------------
-
-
-git cherry-pick komutu, başka bir dalda (branch) yapılan belirli bir commit'in değişikliklerini mevcut dalınıza (branch) uygulamanıza olanak tanır. Yani, başka bir dalın commitlerinden yalnızca belirli bir commit'i almak ve bu commit'in değişikliklerini kendi dalınıza eklemek için kullanılır. Bu, özellikle farklı dallardan veya geçmişten belirli bir değişikliği kendi çalışma dalınıza eklemek istediğinizde kullanışlıdır.
-
-git cherry-pick kullanımı aşağıdaki gibidir:
-
-bash
-Copy code
-git cherry-pick <commit-hash>
-<commit-hash>, eklemek istediğiniz commit'in benzersiz kimlik bilgisini ifade eder.
-Örnek bir kullanım:
-
-bash
-Copy code
-git cherry-pick abc1234
-Bu komut, abc1234 kimlik bilgisine sahip commit'in değişikliklerini mevcut çalışma dalınıza uygular.
-
-Dikkat edilmesi gereken önemli bir nokta, git cherry-pick işlemi sırasında çakışmalar (conflicts) olabileceğidir. Eğer hedef dalınızda veya hedef commit'inizde değişikliklerle çakışma varsa, Git bu çakışmaları çözmeniz gerektiğini bildirecektir. Çakışmaları çözdükten sonra git add ve git commit komutlarını kullanarak çözünüzü kaydedebilirsiniz.
-
-git cherry-pick komutu, özellikle belirli değişiklikleri diğer dallardan veya geçmişten almak istediğinizde oldukça kullanışlıdır, ancak dikkatli kullanılmalıdır, çünkü geçmişteki commit'lerin sırasını değiştirebilir ve potansiyel olarak çakışmalara yol açabilir.
+Artık 10 ayrı commit yerine tek bir commit ile devam edebilirsiniz. Bu adımları takip ederek, bir dizi küçük commiti tek bir commit haline getirebilirsiniz.
 
 
---------------------------------
+# Git Reset Komutunun --hard ve --soft Seçenekleri Arasındaki Fark
+
+Git'te `git reset` komutu, bir daldaki commit geçmişini değiştirmek veya geri almak için kullanılır. `git reset` komutunun `--hard` ve `--soft` olmak üzere iki yaygın kullanımı vardır ve aralarındaki fark önemlidir:
+
+## `git reset --hard`
+
+- Bu seçenek, hem çalışma dizininde hem de yerel depoda yapılan değişiklikleri tamamen geri alır.
+- Tüm çalışma dizinindeki değişiklikler silinir ve tüm dosyalar önceki commit durumuna döner.
+- Yerel depodaki referanslar (branch işaretçileri) dağıtılmış olan commit'in kimliğine ayarlanır ve bu nedenle tüm sonraki commitler silinir.
+- Kullanıcı, bu işlemi gerçekleştirdikten sonra geri alınan değişiklikleri kurtaramaz. Bu nedenle dikkatli kullanılmalıdır.
+
+## `git reset --soft`
+
+- Bu seçenek, çalışma dizinindeki değişiklikleri geri alırken, yerel depodaki commitleri ve geçmişi korur.
+- Tüm çalışma dizinindeki değişiklikler silinir, ancak bu değişiklikler önceki commit durumunda "staged" olarak bekler.
+- Yerel depodaki referanslar (branch işaretçileri) aynı kalır ve bu nedenle sonraki commitler etkilenmez.
+- Kullanıcı, geri alınan değişiklikleri düzenleyebilir ve yeni bir commit olarak ekleyebilir.
+
+Özetle, `git reset --hard` ile yapılan işlem, değişiklikleri ve geçmişi tamamen siler ve geri alınamaz hale getirirken, `git reset --soft` ile yapılan işlem, değişiklikleri saklar ve kullanıcıya düzenleme ve yeni commit ekleme fırsatı sunar. Bu nedenle, hangi seçeneği kullanmanız gerektiği, yapmak istediğiniz işleme ve değişikliklerinizi nasıl yönetmek istediğinize bağlıdır.
 
 
-git commit -a komutu, değiştirilmiş dosyaları otomatik olarak ekler ve ardından commit işlemini başlatır. Commit işlemi için bir metin düzenleyici açılır ve bu düzenleyiciyi kapatmak ve işlemi tamamlamak için aşağıdaki adımları takip edebilirsiniz:
+Git ile yeni bir depo (repository) oluşturup bunu uzak bir depoya (remote repository) yüklemek için adım adım bir Markdown belgesi aşağıda verilmiştir:
 
-Eğer bir metin düzenleyici açıldıysa, önce düzenleme yapabilirsiniz. Commit mesajınızı yazın veya düzenleyin.
+# Yeni Bir Git Depo Oluşturma ve Uzak Depoya Yükleme
 
-Düzenlediğiniz metin düzenleyicisini kaydetmek ve kapatmak için, kullanmış olduğunuz metin düzenleyicisinin kaydetme ve çıkma komutlarına bakmalısınız. Genellikle, metin düzenleyicilerinde kullanılan yaygın komutlar şunlardır:
+1. **Yeni Bir Git Depo (Repository) Oluşturma**:
 
-Vim kullanıyorsanız, Esc tuşuna basın, sonra :wq yazıp Enter tuşuna basarak kaydedip çıkabilirsiniz.
+   Terminali açın ve depo oluşturmak istediğiniz klasöre gidin. Ardından aşağıdaki komutu kullanarak yeni bir Git depo oluşturun:
 
-Nano kullanıyorsanız, Ctrl + O tuşlarına basarak kaydedebilir ve ardından Ctrl + X tuşlarına basarak çıkabilirsiniz.
+   ```bash
+   git init
+   ```
 
-Emacs kullanıyorsanız, Ctrl + X, ardından Ctrl + S ile kaydedebilir ve Ctrl + X, ardından Ctrl + C ile çıkabilirsiniz.
+   Bu komut, yeni bir Git depo oluşturur.
 
-Diğer metin düzenleyicileri için kendi kaydetme ve çıkma komutlarını kullanmanız gerekebilir.
+2. **Dosyaları ve Değişiklikleri Ekleyin ve Commit Yapın**:
 
-Düzenleme işlemini kaydettikten ve metin düzenleyiciyi kapattıktan sonra git commit -a işlemi tamamlanmış olur. Bu adımları takip ederek, git commit -a komutu ile başlattığınız commit işleminden çıkabilirsiniz.
+   Çalışma dizinindeki dosyalarınızı düzenleyin veya yeni dosyalar oluşturun. Ardından bu dosyaları "staged" (hazır) durumuna getirin ve bir commit oluşturun:
 
+   ```bash
+   git add .                  # Tüm dosyaları staged durumuna getirir.
+   git commit -m "İlk commit" # İlk commit'i oluşturur.
+   ```
 
-------------------------------------
+3. **Uzak Depoyu Ekleyin**:
 
+   Uzak bir depo ile çalışmak için, bu depoyu (örneğin, GitHub veya GitLab gibi) eklemeniz gerekmektedir. Uzak depoya bağlanmak için aşağıdaki komutu kullanabilirsiniz:
 
+   ```bash
+   git remote add origin <uzak-depo-URL>
+   ```
+
+   `<uzak-depo-URL>` kısmını, uzak depo URL'si ile değiştirin.
+
+4. **Uzak Depoya Yükleme (Push Etme)**:
+
+   Şimdi, yerel deponuzdaki commitleri uzak depoya gönderebilirsiniz. Bunun için aşağıdaki komutu kullanın:
+
+   ```bash
+   git push -u origin master
+   ```
+
+   `-u` seçeneği, yerel dalı uzak dal ile ilişkilendirir ve sonraki push işlemleri için daha kolaylık sağlar. `master` yerine kullanmak istediğiniz dalın adını kullanabilirsiniz.
+
+5. **Kullanıcı Bilgilerini Girmek (Opsiyonel)**:
+
+   İlk kez uzak depoya veri gönderiyorsanız, Git sizden kullanıcı adı ve şifre bilgisi isteyebilir. Bu bilgileri girmeniz gerekebilir.
+
+Bu adımları takip ederek, yeni bir Git depo oluşturabilir ve bu depoyu uzak bir depoya yükleyebilirsiniz. Bu Markdown belgesi, bu işlemi adım adım anlatır ve okuyuculara rehberlik eder.
