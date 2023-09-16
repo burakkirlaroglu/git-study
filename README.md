@@ -177,3 +177,30 @@ Bu adımları takip ederek, yeni bir Git depo oluşturabilir ve bu depoyu uzak b
    Eğer çalıştığınız dalı (branch) uzak bir depoya göndermek isterseniz, bu yeni commit'i uzak depoya `git push` komutu ile gönderebilirsiniz.
 
 `git revert`, geçmişteki bir commit'i geri almak ve bu değişikliği yeni bir commit ile kaydetmek için güvenli bir yol sağlar. Bu sayede, geçmişteki hataları düzeltebilir ve geçmişteki değişiklikleri saklayabilirsiniz.
+
+
+# Git'te, yerel olarak yaptığınız commit mesajını değiştirmek için aşağıdaki adımları takip edebilirsiniz. Commit mesajını değiştirirken dikkatli olun, çünkü bu işlem geçmişteki commit'i etkiler ve eğer bu commit'i uzak bir depoya zaten gönderdiyseniz, işleri karmaşıklaştırabilir. Eğer commit'i uzak depoya göndermediyseniz, bu işlem oldukça güvenlidir.
+
+1. **Yerel Commit Mesajını Değiştirme**:
+
+   İlk olarak, değiştirmek istediğiniz commit mesajını düzenlemelisiniz. Bu işlemi aşağıdaki komutu kullanarak gerçekleştirebilirsiniz:
+
+   ```bash
+   git commit --amend -m "Yeni commit mesajı"
+   ```
+
+   `"Yeni commit mesajı"` kısmını, commit mesajını değiştirmek istediğiniz yeni metinle değiştirin. Bu komut, en son commit'inizin mesajını değiştirir.
+
+2. **Düzenleme İşlemini Kaydetme ve Kapatma**:
+
+   Yukarıdaki komutu çalıştırdığınızda, metin düzenleyicisi açılacaktır ve yeni commit mesajınızı girme şansınız olacaktır. Yeni commit mesajınızı düzenledikten sonra, metin düzenleyicisini kaydedin ve kapatın. Düzenlemeyi kaydetmek ve kapatmak için metin düzenleyicinizin özelliğine bağlı olarak farklı tuş kombinasyonları kullanabilirsiniz.
+
+3. **Yerel Commit'i Güncelleme**:
+
+   Yeni commit mesajını kaydettikten ve metin düzenleyicisini kapattıktan sonra, yerel commit'iniz güncellenecektir. Bu, aynı commit ile aynı kimlik bilgilerine sahip yeni bir commit oluşturur. Dolayısıyla, bu işlem geçmişteki commit'i değiştirmez, sadece yeni bir commit oluşturur.
+
+4. **Uzak Depoya Gönderme (İsteğe Bağlı)**:
+
+   Eğer bu commit'i uzak bir depoya göndermediyseniz, bu adımları takip etmek yeterlidir. Ancak, bu commit'i zaten uzak bir depoya gönderdiyseniz, yeni commit'i de uzak depoya göndermeniz gerekebilir.
+
+Özetle, `git commit --amend` komutu ile en son commit'inizin mesajını değiştirebilirsiniz. Ancak dikkatli olmalısınız, çünkü bu işlem geçmişteki commit'i etkiler ve diğer işbirliği yapanlar için karmaşık hale gelebilir.
