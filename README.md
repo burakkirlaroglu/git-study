@@ -130,3 +130,50 @@ Git ile yeni bir depo (repository) oluşturup bunu uzak bir depoya (remote repos
    İlk kez uzak depoya veri gönderiyorsanız, Git sizden kullanıcı adı ve şifre bilgisi isteyebilir. Bu bilgileri girmeniz gerekebilir.
 
 Bu adımları takip ederek, yeni bir Git depo oluşturabilir ve bu depoyu uzak bir depoya yükleyebilirsiniz. Bu Markdown belgesi, bu işlemi adım adım anlatır ve okuyuculara rehberlik eder.
+
+
+# Git ile revert işlemi
+
+`git revert`, Git'te geçmişteki bir commit'in değişikliklerini geri almak için kullanılan bir komuttur. `git revert` kullanarak, geçmişte bir hata yapan veya istenmeyen bir değişikliği düzelten yeni bir commit oluşturabilirsiniz. Bu, mevcut dalın (branch) geçmişine geri dönmeden, geçmişteki bir commit'i düzelten bir çözüm eklemenizi sağlar.
+
+`git revert` komutunu kullanmanın temel adımları şunlardır:
+
+1. **Revert Yapılacak Commit'i Belirleme**:
+
+   İlk olarak, geri almak istediğiniz commit'in kimlik bilgisini (commit hash) veya referansını belirlemeniz gerekmektedir. Bu commit, geçmişteki bir değişikliği temsil eder.
+
+2. **Revert İşlemini Gerçekleştirme**:
+
+   Aşağıdaki komutu kullanarak belirlediğiniz commit'i geri alabilirsiniz:
+
+   ```bash
+   git revert <commit-hash>
+   ```
+
+   `<commit-hash>` kısmını geri almak istediğiniz commit'in kimlik bilgisiyle değiştirin.
+
+   Örneğin:
+
+   ```bash
+   git revert abc1234
+   ```
+
+   Bu komut, `abc1234` kimlik bilgisine sahip commit'in değişikliklerini geri alacak ve yeni bir commit oluşturacaktır.
+
+3. **Commit Açıklamasını Düzenleme**:
+
+   `git revert` komutu, yeni oluşturulan geri alma commit'i için otomatik bir açıklama oluşturur. Açıklamayı düzenlemek isterseniz, düzenleyebilirsiniz.
+
+4. **Değişiklikleri Kaydetme ve Kapatma**:
+
+   Açıklamayı düzenledikten sonra, metin düzenleyicisini kaydedin ve kapatın. Bazı metin düzenleyicileri, varsayılan olarak bir açıklama sağlar ve kapatmak için farklı kısayollar kullanabilir.
+
+5. **Commit'i Oluşturma**:
+
+   Metin düzenleyicisini kapattıktan sonra, yeni geri alma commit'i otomatik olarak oluşturulur.
+
+6. **Push (İsteğe Bağlı)**:
+
+   Eğer çalıştığınız dalı (branch) uzak bir depoya göndermek isterseniz, bu yeni commit'i uzak depoya `git push` komutu ile gönderebilirsiniz.
+
+`git revert`, geçmişteki bir commit'i geri almak ve bu değişikliği yeni bir commit ile kaydetmek için güvenli bir yol sağlar. Bu sayede, geçmişteki hataları düzeltebilir ve geçmişteki değişiklikleri saklayabilirsiniz.
