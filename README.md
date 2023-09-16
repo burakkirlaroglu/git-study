@@ -177,3 +177,6 @@ Bu adımları takip ederek, yeni bir Git depo oluşturabilir ve bu depoyu uzak b
    Eğer çalıştığınız dalı (branch) uzak bir depoya göndermek isterseniz, bu yeni commit'i uzak depoya `git push` komutu ile gönderebilirsiniz.
 
 `git revert`, geçmişteki bir commit'i geri almak ve bu değişikliği yeni bir commit ile kaydetmek için güvenli bir yol sağlar. Bu sayede, geçmişteki hataları düzeltebilir ve geçmişteki değişiklikleri saklayabilirsiniz.
+
+
+
