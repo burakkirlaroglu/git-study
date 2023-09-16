@@ -180,3 +180,18 @@ Bu adımları takip ederek, yeni bir Git depo oluşturabilir ve bu depoyu uzak b
 
 
 
+
+
+
+
+askdmaldmasda
+
+
+
+
+aksdmalkdmasd
+
+
+
+
+aksdnlkadnlasda
