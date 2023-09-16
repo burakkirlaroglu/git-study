@@ -131,3 +131,11 @@ Git ile yeni bir depo (repository) oluşturup bunu uzak bir depoya (remote repos
    İlk kez uzak depoya veri gönderiyorsanız, Git sizden kullanıcı adı ve şifre bilgisi isteyebilir. Bu bilgileri girmeniz gerekebilir.
 
 Bu adımları takip ederek, yeni bir Git depo oluşturabilir ve bu depoyu uzak bir depoya yükleyebilirsiniz. Bu Markdown belgesi, bu işlemi adım adım anlatır ve okuyuculara rehberlik eder.
+
+
+
+
+
+
+
+akshdlkasdklasjdklajdlajdkasjdljalkd revert comiti denemesi için commit
